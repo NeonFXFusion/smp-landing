@@ -1,0 +1,40 @@
+---
+title: Automatic crafting
+description: Describes what autocrafting is and how to setup your own autocrafter.
+date: 2023-03-28
+published: true
+url: https://www.spigotmc.org/resources/craftmatic-autocrafter.94243/
+---
+
+
+## Who is this plugin intended for?
+
+Have you invested a lot of time in creating farms that can produce large numbers of resources only to find that now you spend all of your time manually crafting the raw resources into items you can use? If this sucks the joy out of the game for you, this plugin can help. It provides the mechanisms to automate the crafting of items.​
+
+##  What does this plugin do?
+
+This plugin implements an automatic crafting system (aka autocrafter). 
+That is, a player no longer needs to interact directly with a workbench to craft large numbers of items. 
+The player can no arrange a series of blocks, specify a recipe and the blocks will convert raw ingredients
+into new crafted items, automatically.
+
+1. First you must configure a dropper as a "crafting block". 
+1. To do this, place an item frame on a dropper and place a crafting table in the item frame. 
+1. At that point, the item frame will become invisible and the "crafting block" can be configured to craft items automatically once a recipe is set and raw ingredients are provided.
+1. Now place an "output" container (chest, barrel, shulkerbox, hopper, etc) in front of the crafting block/dropper (that is, adjacent to the dropper's face). This is where the crafting block will place items after it crafts them.
+1. Finally, on the side of the dropper opposite that of the "output" container place an "input"/"ingredients" container. This is where the crafting block will look for suitable crafting ingredients each crafting tick to craft a new item or block.​
+
+## How do you configure the crafting recipe?
+
+Once the the dropper has been configured as a crafting block with suitable input and output containers, interact with the crafting block like a workbench. Right-click on it an the player will see the traditional workbench GUI. Fill the crafting block's inventory with the ingredients of the recipe you wish to craft exactly as you would if you were using a recipe on a crafting table. Close the crafting block's inventory without pulling the crafted item from the result slot. At this point, you have an operational "automatic crafting block". Every crafting tick (20 game ticks by default), the crafting block will try to pull ingredients from the ingredients container to satisfy the requirements of the recipe and if successful, convert the ingredients into the crafted item, placing the new item in the output container. If there is not enough room in the output container, no items will be crafted.
+
+Every time a new item is crafted, the crafting table previously placed in the item frame will rotate once clockwise to provide feedback that the crafting block is working. (If this item is removed from the frame, the crafting block will revert back to an ordinary dropper.)​
+
+If the ingredients container is a trapped chest, the crafting block will never pull the last item from an inventory slot. This behavior allows you to reserve slots in the trapped chest for particular ingredients and is very useful when recipes require a mix of ingredients and you do not want one hopper feeding into the chest using up all of the slots leaving no room for the other ingredients needed for the recipe.
+​
+## Which recipes are supported?
+
+Most recipes are supported, even those added using data packs. However, some recipes are not currently supported. The Minecraft server implements some recipes as special cases that are not crafted using the normal crafting mechanics. These recipes are described at https://minecraft.fandom.com/wiki/Recipe#crafting_special_.2A.
+To make these work, they must be emulated in the plugin. Currently, fireworks, suspicious stew, tipped arrows, dyeing shulker boxes and applying banners to shields are emulated. Other special recipes will be added as time and interest permit.
+
+Also, when honey blocks are crafted the empty glass bottles are placed in the output container along with the honey block.​

@@ -29,8 +29,8 @@ module.exports = {
 				},
 			},
 			fontFamily: {
-				sans: ["var(--font-inter)", ...defaultTheme.fontFamily.sans],
-				display: ["var(--font-calsans)"],
+				sans: ["var(--font-normal)", ...defaultTheme.fontFamily.sans],
+				display: ["var(--font-accent)"],
 			},
 			backgroundImage: {
 				"gradient-radial":
@@ -41,8 +41,19 @@ module.exports = {
 				title: "title 3s ease-out forwards",
 				"fade-left": "fade-left 3s ease-in-out forwards",
 				"fade-right": "fade-right 3s ease-in-out forwards",
+				"sine": "sine 3s infinite"
 			},
 			keyframes: {
+				"sine": {
+					"0%, 100%": {
+						"transform": "translateY(-1%)",
+						"animation-timing-function": "cubic-bezier(0.8,0,1,1)",
+					},
+					"50%": {
+						transform: "none",
+						"animation-timing-function": "cubic-bezier(0.8,0,1,1)",
+					}
+				},
 				"fade-in": {
 					"0%": {
 						opacity: "0%",

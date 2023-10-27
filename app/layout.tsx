@@ -1,21 +1,21 @@
 import "../global.css";
-import { Inter } from "@next/font/google";
-import LocalFont from "@next/font/local";
+import { Exo_2, Inter } from "next/font/google";
+import { Jura } from "next/font/google";
 import { Metadata } from "next";
 import { Analytics } from "./components/analytics";
 
 export const metadata: Metadata = {
 	title: {
-		default: "chronark.com",
-		template: "%s | chronark.com",
+		default: "aseben smp",
+		template: "%s | aseben smp",
 	},
 	description: "Software engineer at upstash.com and founder of planetfall.io",
 	openGraph: {
-		title: "chronark.com",
+		title: "aseben smp",
 		description:
 			"Software engineer at upstash.com and founder of planetfall.io",
-		url: "https://chronark.com",
-		siteName: "chronark.com",
+		url: "https://smp.surreal.sh",
+		siteName: "smp.surreal.sh",
 		images: [
 			{
 				url: "https://chronark.com/og.png",
@@ -45,14 +45,14 @@ export const metadata: Metadata = {
 		shortcut: "/favicon.png",
 	},
 };
-const inter = Inter({
+const fontNormal = Exo_2({
 	subsets: ["latin"],
-	variable: "--font-inter",
+	variable: "--font-normal",
 });
 
-const calSans = LocalFont({
-	src: "../public/fonts/CalSans-SemiBold.ttf",
-	variable: "--font-calsans",
+const fontAccent = Jura({
+	subsets: ["latin"],
+	variable: "--font-accent",
 });
 
 export default function RootLayout({
@@ -61,12 +61,15 @@ export default function RootLayout({
 	children: React.ReactNode;
 }) {
 	return (
-		<html lang="en" className={[inter.variable, calSans.variable].join(" ")}>
+		<html
+			lang="en"
+			className={[fontNormal.variable, fontAccent.variable].join(" ")}
+		>
 			<head>
 				<Analytics />
 			</head>
 			<body
-				className={`bg-black ${
+				className={`bg-white ${
 					process.env.NODE_ENV === "development" ? "debug-screens" : undefined
 				}`}
 			>

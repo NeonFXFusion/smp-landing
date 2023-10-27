@@ -9,6 +9,8 @@ interface ParticlesProps {
 	staticity?: number;
 	ease?: number;
 	refresh?: boolean;
+	bgRef?: React.RefObject<HTMLImageElement>;
+	mdRef?: React.RefObject<HTMLImageElement>;
 }
 
 export default function Particles({
@@ -17,6 +19,8 @@ export default function Particles({
 	staticity = 50,
 	ease = 50,
 	refresh = false,
+	bgRef = useRef<HTMLImageElement>(null),
+	mdRef = useRef<HTMLImageElement>(null)
 }: ParticlesProps) {
 	const canvasRef = useRef<HTMLCanvasElement>(null);
 	const canvasContainerRef = useRef<HTMLDivElement>(null);
@@ -123,8 +127,8 @@ export default function Particles({
 			const { x, y, translateX, translateY, size, alpha } = circle;
 			context.current.translate(translateX, translateY);
 			context.current.beginPath();
-			context.current.arc(x, y, size, 0, 2 * Math.PI);
-			context.current.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+			context.current.arc(x, y, size * 2, 0, 2 * Math.PI);
+			context.current.fillStyle = `rgba(125, 211, 252, ${alpha})`;
 			context.current.fill();
 			context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
 
@@ -196,6 +200,19 @@ export default function Particles({
 			circle.translateY +=
 				(mouse.current.y / (staticity / circle.magnetism) - circle.translateY) /
 				ease;
+
+			if(bgRef.current) {
+				bgRef.current.style.left = ((mouse.current.x / 4 - bgRef.current.x) /
+				ease) + 'px'
+				bgRef.current.style.top = ((mouse.current.y / 4 - bgRef.current.y) /
+				ease) + 'px'
+			}
+			if(mdRef.current) {
+				mdRef.current.style.left = ((mouse.current.x - mdRef.current.x) /
+				ease) + 'px'
+				mdRef.current.style.top = ((mouse.current.y - mdRef.current.y) /
+				ease) + 'px'
+			}
 			// circle gets out of the canvas
 			if (
 				circle.x < -circle.size ||

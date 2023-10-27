@@ -1,5 +1,6 @@
 "use client";
-import { ArrowLeft, Eye, Github, Twitter } from "lucide-react";
+import { ArrowLeftIcon, EyeIcon } from "@heroicons/react/20/solid";
+import { SiGithub, SiTwitter } from "@icons-pack/react-simple-icons";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -43,7 +44,7 @@ export const Header: React.FC<Props> = ({ project, views }) => {
 	return (
 		<header
 			ref={ref}
-			className="relative isolate overflow-hidden bg-gradient-to-tl from-black via-zinc-900 to-black"
+			className="relative isolate overflow-hidden bg-gradient-to-tl to-sky-200 from-zinc-100 via-zinc-900/20"
 		>
 			<div
 				className={`fixed inset-x-0 top-0 z-50 backdrop-blur lg:backdrop-blur-none duration-200 border-b lg:bg-transparent ${
@@ -62,40 +63,22 @@ export const Header: React.FC<Props> = ({ project, views }) => {
 									: "text-zinc-600 hover:text-zinc-900"
 							} `}
 						>
-							<Eye className="w-5 h-5" />{" "}
+							<EyeIcon className="w-5 h-5" />{" "}
 							{Intl.NumberFormat("en-US", { notation: "compact" }).format(
 								views,
 							)}
 						</span>
-						<Link target="_blank" href="https://twitter.com/chronark_">
-							<Twitter
-								className={`w-6 h-6 duration-200 hover:font-medium ${
-									isIntersecting
-										? " text-zinc-400 hover:text-zinc-100"
-										: "text-zinc-600 hover:text-zinc-900"
-								} `}
-							/>
-						</Link>
-						<Link target="_blank" href="https://github.com/chronark">
-							<Github
-								className={`w-6 h-6 duration-200 hover:font-medium ${
-									isIntersecting
-										? " text-zinc-400 hover:text-zinc-100"
-										: "text-zinc-600 hover:text-zinc-900"
-								} `}
-							/>
-						</Link>
 					</div>
 
 					<Link
-						href="/projects"
+						href="/resources"
 						className={`duration-200 hover:font-medium ${
 							isIntersecting
 								? " text-zinc-400 hover:text-zinc-100"
 								: "text-zinc-600 hover:text-zinc-900"
 						} `}
 					>
-						<ArrowLeft className="w-6 h-6 " />
+						<ArrowLeftIcon className="w-6 h-6 " />
 					</Link>
 				</div>
 			</div>
@@ -105,7 +88,7 @@ export const Header: React.FC<Props> = ({ project, views }) => {
 						<h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl font-display">
 							{project.title}
 						</h1>
-						<p className="mt-6 text-lg leading-8 text-zinc-300">
+						<p className="mt-6 text-lg leading-8 text-zinc-400">
 							{project.description}
 						</p>
 					</div>
