@@ -29,7 +29,7 @@ export default async function PostPage({ params }: Props) {
 	if (!project) {
 		notFound();
 	}
-	const redis = new Redis(process.env.REDIS_URL |)
+	const redis = new Redis(process.env.REDIS_URL || 'localhost:6379')
 	
 	const views =
 		(await redis.get(["pageviews", "projects", slug].join(":"))) ?? 0;
