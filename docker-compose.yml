@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  smp-landing:
+    build: .
+    image: smp-landing:latest
+    restart: unless-stopped
+    environment:
+      - NEXT_PUBLIC_BEAM_TOKEN=bbe5850c-770d-4c23-a4d4-e74abb58d774
+      - NEXT_PUBLIC_REDIS_URL=tasks.smp-redis:6379
+    networks:
+      - caddy
+    depends_on:
+      - smp-redis
+    deploy:
+      placement:
+        constraints: [node.hostname == alphabox]
+
+  smp-redis:
+    image: redis:alpine
+    restart: unless-stopped
+    networks:
+      - caddy
+    volumes:
+      - /srv/redis/:/data
+    deploy:
+      placement:
+        constraints: [node.hostname == alphabox]
+    command: ['redis-server --save 60 1 --loglevel warning']
+
+networks:
+  caddy:
+    external: true

@@ -1,21 +1,21 @@
-FROM node:18-alpine AS build
+FROM oven/bun:latest AS build
 # Install dependencies only when needed
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
 WORKDIR /app
 # Copy and install the dependencies for the project
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json ./
+RUN bun i
 # Copy all other project files to working directory
 COPY . .
 # Run the next build process and generate the artifacts
-RUN npm run build
+RUN bun run build
 
 
 # we are using multi stage build process to keep the image size as small as possible
-FROM node:18-alpine
+FROM node:alpine
 # update and install latest dependencies, add dumb-init package
 # add a non root user
+ENV PATH="${PATH}:/sbin"
 RUN apk update && apk upgrade && apk add dumb-init && adduser -D nextuser 
 
 # set work dir as app
