@@ -31,10 +31,10 @@ export default function Example() {
 	return (
 		<div className="bg-gradient-to-tl to-sky-200 from-zinc-100 via-zinc-900/20">
 			<Navigation />
-			<div className="fixed w-full top-[-40%] h-0 pb-[56.25%] flex flex-col items-center animate-fade-in">
+			<div className="fixed w-full -top-10 md:-top-40 h-0 pb-[30%] flex flex-col items-center animate-fade-in">
 				<Image id="cloud2" src="/cloud2.png" alt="Clouds back" fill className="w-full h-auto brightness-110 animate-glow blur-sm drop-shadow-xl"/>
 			</div>
-			<div className="fixed w-full bottom-[-40%] h-0 pb-[56.25%] flex flex-col items-center animate-fade-in">
+			<div className="fixed w-full -bottom-10 md:-bottom-40 h-0 pt-[30%] flex flex-col items-center animate-fade-in">
 				<Image id="cloud2" src="/cloud2.png" alt="Clouds back" fill className="w-full h-auto brightness-110 animate-glow blur-sm drop-shadow-xl"/>
 			</div>
 			<div className="container flex justify-center items-center px-4 mx-auto min-h-screen relative animate-title">

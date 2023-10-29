@@ -29,12 +29,26 @@ export default async function PostPage({ params }: Props) {
 	if (!project) {
 		notFound();
 	}
-	const redis = new Redis(process.env.REDIS_URL || 'localhost:6379', {
-		lazyConnect: true
-	})
-	
 	let views = 0;
 	try {
+		if (!process.env.REDIS_ENABLED) {
+			console.log('Redis disabled, assuming build.')
+			return
+		}
+		const redis = new Redis(process.env.REDIS_URL || 'localhost:6379', {
+			lazyConnect: true,
+			maxLoadingRetryTime: 100,
+			maxRetriesPerRequest: 0,
+			enableOfflineQueue: false,
+		})
+	
+		redis.on('error', e => {
+			const env = process.env.NODE_ENV
+			if(env == "development"){
+				console.log('[ioredis]', e.message)
+			}
+		})
+		
 		await redis.connect()
 		views =
 			Number(await redis.get(["pageviews", "projects", slug].join(":"))) ?? 0;
@@ -44,7 +58,7 @@ export default async function PostPage({ params }: Props) {
 
 	return (
 		<div className="min-h-screen bg-zinc-50">
-			<Header project={project} views={Number(views)} />
+			<Header project={project} views={views} />
 			<ReportView slug={project.slug} />
 
 			<article className="px-4 py-12 mx-auto prose prose-zinc prose-quoteless">

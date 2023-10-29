@@ -10,13 +10,27 @@ import Redis from "ioredis";
 export const revalidate = 60;
 export default async function ResourcesPage() {
 
-	const redis = new Redis(process.env.REDIS_URL || 'localhost:6379', {
-		lazyConnect: true
-	})
-
 	let views: Record<string, number> = {}
 
 	try {
+		if (!process.env.REDIS_ENABLED) {
+			console.log('Redis disabled, assuming build.')
+			return
+		}
+		const redis = new Redis(process.env.REDIS_URL || 'localhost:6379', {
+			lazyConnect: true,
+			maxLoadingRetryTime: 100,
+			maxRetriesPerRequest: 0,
+			enableOfflineQueue: false,
+		})
+	
+		redis.on('error', e => {
+			const env = process.env.NODE_ENV
+			if(env == "development"){
+				console.log('[ioredis]', e.message)
+			}
+		})	
+
 		redis.connect()
 		views = (
 			(await redis.mget(
