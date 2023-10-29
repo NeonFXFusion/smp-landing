@@ -13,6 +13,9 @@ services:
     depends_on:
       - smp-redis
     deploy:
+      labels:
+        caddy: smp.surreal.sh
+        caddy.reverse_proxy: "{{upstreams 3000}}"
       placement:
         constraints: [node.hostname == alphabox]
 

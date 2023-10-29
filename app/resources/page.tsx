@@ -17,7 +17,7 @@ export default async function ResourcesPage() {
 			...allResources.map((p) => ["pageviews", "projects", p.slug].join(":")),
 		)
 	).reduce((acc, v, i) => {
-		acc[allResources[i].slug] = v ?? 0;
+		acc[allResources[i].slug] = Number(v) ?? 0;
 		return acc;
 	}, {} as Record<string, number>);
 
