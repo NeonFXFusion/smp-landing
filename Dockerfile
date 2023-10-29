@@ -16,9 +16,8 @@ RUN node --version
 RUN npm run build
 
 ENV PATH="${PATH}:/sbin"
-RUN apk update && apk upgrade && apk add dumb-init && adduser -D nextuser 
+RUN apk update && apk upgrade && apk add dumb-init
 
-USER nextuser
 # expose 3000 on container
 EXPOSE 3000
 
