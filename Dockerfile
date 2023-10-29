@@ -21,6 +21,7 @@ RUN apk update && apk upgrade && apk add dumb-init
 # expose 3000 on container
 EXPOSE 3000
 
+ENV NEXT_PUBLIC_REDIS_ENABLED=true
 # set app host ,port and node env 
 ENV HOST=0.0.0.0 PORT=3000
 
