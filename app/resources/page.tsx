@@ -10,16 +10,25 @@ import Redis from "ioredis";
 export const revalidate = 60;
 export default async function ResourcesPage() {
 
-	const redis = new Redis(process.env.REDIS_URL || 'localhost:6379')
+	const redis = new Redis(process.env.REDIS_URL || 'localhost:6379', {
+		lazyConnect: true
+	})
 
-	const views = (
-		await redis.mget(
-			...allResources.map((p) => ["pageviews", "projects", p.slug].join(":")),
-		)
-	).reduce((acc, v, i) => {
-		acc[allResources[i].slug] = Number(v) ?? 0;
-		return acc;
-	}, {} as Record<string, number>);
+	let views: Record<string, number> = {}
+
+	try {
+		redis.connect()
+		views = (
+			(await redis.mget(
+				...allResources.map((p) => ["pageviews", "projects", p.slug].join(":")),
+			)) ?? 0
+		).reduce((acc, v, i) => {
+			acc[allResources[i].slug] = Number(v) ?? 0;
+			return acc;
+		}, {} as Record<string, number>);
+	} catch {
+
+	}
 
 	const featured = allResources.find((resource) => resource.slug === "registering")!;
 	const top2 = allResources.find((resource) => resource.slug === "treecapitator")!;

@@ -3,16 +3,14 @@ import { Redis } from "ioredis";
 import { NextRequest, NextResponse, userAgent } from "next/server";
 import { headers } from 'next/headers'
 
-const redis = new Redis(process.env.REDIS_URL || 'localhost:6379')
-
 /*export const config = {
 	runtime: "edge",
 }*/
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
-	/*if (headers().get("Content-Type") !== "application/json") {
-		return new NextResponse("must be json", { status: 400 });
-	}*/
+	if (headers().get("Content-Type") !== "application/json") {
+		return new NextResponse("Must be json", { status: 400 });
+	}
 
 	const body = await req.json()
 	let slug: string | undefined = undefined;
@@ -22,8 +20,14 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
 	if (!slug) {
 		return new NextResponse("Slug not found", { status: 400 });
 	}
-	const ip = req.ip;
+	const ip = headers().get("X-Forwarded-For")
   const agent = userAgent(req)
+	
+	const redis = new Redis(process.env.REDIS_URL || 'localhost:6379', {
+		lazyConnect: true
+	})
+	redis.connect()
+
 	if (ip) {
 		// Hash the IP in order to not store it directly in your db.
 		const buf = await crypto.subtle.digest(

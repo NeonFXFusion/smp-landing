@@ -9,16 +9,16 @@ export const metadata: Metadata = {
 		default: "aseben smp",
 		template: "%s | aseben smp",
 	},
-	description: "Software engineer at upstash.com and founder of planetfall.io",
+	description: "The most elite vanilla survival multiplayer server in minecraft.",
 	openGraph: {
 		title: "aseben smp",
 		description:
-			"Software engineer at upstash.com and founder of planetfall.io",
+			"The most elite vanilla survival multiplayer server in minecraft.",
 		url: "https://smp.surreal.sh",
 		siteName: "smp.surreal.sh",
 		images: [
 			{
-				url: "https://chronark.com/og.png",
+				url: "https://smp.surreal.sh/og.png",
 				width: 1920,
 				height: 1080,
 			},
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 		},
 	},
 	twitter: {
-		title: "Chronark",
+		title: "aseben smp",
 		card: "summary_large_image",
 	},
 	icons: {

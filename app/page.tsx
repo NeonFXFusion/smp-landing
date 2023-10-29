@@ -1,8 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import React, { useRef } from "react";
-import Particles from "./components/particles";
-import { SiMinetest } from "@icons-pack/react-simple-icons";
 import { BookOpenIcon, ChatBubbleOvalLeftIcon, ClipboardIcon } from "@heroicons/react/20/solid";
 import Background from "./components/background";
 

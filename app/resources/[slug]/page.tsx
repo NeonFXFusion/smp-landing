@@ -29,10 +29,18 @@ export default async function PostPage({ params }: Props) {
 	if (!project) {
 		notFound();
 	}
-	const redis = new Redis(process.env.REDIS_URL || 'localhost:6379')
+	const redis = new Redis(process.env.REDIS_URL || 'localhost:6379', {
+		lazyConnect: true
+	})
 	
-	const views =
-		(await redis.get(["pageviews", "projects", slug].join(":"))) ?? 0;
+	let views = 0;
+	try {
+		await redis.connect()
+		views =
+			Number(await redis.get(["pageviews", "projects", slug].join(":"))) ?? 0;
+	} catch (e) {
+		
+	}
 
 	return (
 		<div className="min-h-screen bg-zinc-50">
